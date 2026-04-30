@@ -4,8 +4,13 @@ A Containerlab topology of a 5-node SR Linux CLOS fabric (2 spines + 3 leaves)
 with three Linux hosts on VLAN 100 / VLAN 300 and a full telemetry stack
 (gNMIc, Prometheus, Loki, Promtail, Grafana).
 
-  
-*Machine type: 4 vCPU · 16 GB RAM*
+<p align="center">
+  <a href="https://codespaces.new/kolontourou/SRLwithTelemetry?quickstart=1">
+    <img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg">
+  </a>
+  <br>
+  <em>Machine type: 4 vCPU · 16 GB RAM</em>
+</p>
 
 ## Topology
 
