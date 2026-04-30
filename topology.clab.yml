@@ -1,0 +1,174 @@
+name: srl-with-telemetry
+
+mgmt:
+  network: srl-with-telemetry
+  ipv4-subnet: 172.20.22.0/24
+
+topology:
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:26.3.1
+      type: ixr-d3l
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+
+  nodes:
+    spine1:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.20.22.10
+      startup-config: spine1.cfg
+      binds:
+        - configs/dns/lab-hosts:/tmp/lab-hosts:ro
+      exec:
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; grep -v "^#" /tmp/lab-hosts >> /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    spine2:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.20.22.11
+      startup-config: spine2.cfg
+      binds:
+        - configs/dns/lab-hosts:/tmp/lab-hosts:ro
+      exec:
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; grep -v "^#" /tmp/lab-hosts >> /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    leaf1:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.20.22.12
+      startup-config: leaf1.cfg
+      binds:
+        - configs/dns/lab-hosts:/tmp/lab-hosts:ro
+      exec:
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; grep -v "^#" /tmp/lab-hosts >> /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    leaf2:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.20.22.13
+      startup-config: leaf2.cfg
+      binds:
+        - configs/dns/lab-hosts:/tmp/lab-hosts:ro
+      exec:
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; grep -v "^#" /tmp/lab-hosts >> /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    leaf3:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.20.22.14
+      startup-config: leaf3.cfg
+      binds:
+        - configs/dns/lab-hosts:/tmp/lab-hosts:ro
+      exec:
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; grep -v "^#" /tmp/lab-hosts >> /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    host1:
+      kind: linux
+      mgmt-ipv4: 172.20.22.15
+      binds:
+        - configs/dns/dnsmasq-host1.conf:/config/dnsmasq-host1.conf:ro
+      exec:
+        - ip link set eth1 up
+        - ip link add link eth1 name eth1.100 type vlan id 100
+        - ip link set eth1.100 up
+        - ip addr add 10.100.1.10/24 dev eth1.100
+        - ip route replace default via 10.100.1.1 dev eth1.100
+        - /usr/sbin/dnsmasq --conf-file=/config/dnsmasq-host1.conf
+        - sh -c 'echo "nameserver 10.100.1.10" > /etc/resolv.conf'
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    host2:
+      kind: linux
+      mgmt-ipv4: 172.20.22.16
+      exec:
+        - ip link set eth1 up
+        - ip link add link eth1 name eth1.300 type vlan id 300
+        - ip link set eth1.300 up
+        - ip addr add 10.100.3.10/24 dev eth1.300
+        - ip route replace default via 10.100.3.1 dev eth1.300
+        - sh -c 'echo "nameserver 10.100.1.10" > /etc/resolv.conf'
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    host3:
+      kind: linux
+      mgmt-ipv4: 172.20.22.17
+      exec:
+        - ip link set eth1 up
+        - ip link add link eth1 name eth1.300 type vlan id 300
+        - ip link set eth1.300 up
+        - ip addr add 10.100.3.11/24 dev eth1.300
+        - ip route replace default via 10.100.3.1 dev eth1.300
+        - sh -c 'echo "nameserver 10.100.1.10" > /etc/resolv.conf'
+        - sh -c '(sleep 20; grep -v -E "\bspine1\b|\bspine2\b|\bleaf1\b|\bleaf2\b|\bleaf3\b|\bhost1\b|\bhost2\b|\bhost3\b|\bgw-vlan100\b|\bgw-vlan300\b" /etc/hosts > /tmp/h; cat /tmp/h > /etc/hosts) &'
+
+    promtail:
+      kind: linux
+      image: grafana/promtail:3.2.0
+      mgmt-ipv4: 172.20.22.90
+      binds:
+        - configs/telemetry/promtail/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
+      cmd: --config.file=/etc/promtail/promtail-config.yml
+
+    loki:
+      kind: linux
+      image: grafana/loki:3.2.0
+      mgmt-ipv4: 172.20.22.94
+      binds:
+        - configs/telemetry/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
+      cmd: --config.file=/etc/loki/loki-config.yml
+
+    gnmic:
+      kind: linux
+      image: ghcr.io/openconfig/gnmic:0.39.1
+      mgmt-ipv4: 172.20.22.91
+      binds:
+        - configs/telemetry/gnmic/gnmic-config.yml:/gnmic-config.yml:ro
+      cmd: --config /gnmic-config.yml --log subscribe
+
+    prometheus:
+      kind: linux
+      image: quay.io/prometheus/prometheus:v2.54.1
+      mgmt-ipv4: 172.20.22.92
+      binds:
+        - configs/telemetry/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      cmd: --config.file=/etc/prometheus/prometheus.yml
+      ports:
+        - 9090:9090
+
+    grafana:
+      kind: linux
+      image: grafana/grafana:11.2.0
+      mgmt-ipv4: 172.20.22.93
+      binds:
+        - configs/telemetry/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+        - configs/telemetry/grafana/provisioning/dashboards/srl-with-telemetry.yaml:/etc/grafana/provisioning/dashboards/srl-with-telemetry.yaml:ro
+        - configs/telemetry/grafana/provisioning/dashboards/srl:/etc/grafana/provisioning/dashboards/srl:ro
+        - front-panel-spine-single.svg:/usr/share/grafana/public/img/srl-front-spine.svg:ro
+        - front-panel-leaf-single.svg:/usr/share/grafana/public/img/srl-front-leaf.svg:ro
+        - configs/telemetry/grafana/plugins/andrewbmchugh-flow-panel:/var/lib/grafana/plugins/andrewbmchugh-flow-panel:ro
+      ports:
+        - 3000:3000
+      env:
+        GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/srl/telemetry-overview.json
+        GF_ORG_ROLE: Admin
+        GF_ORG_NAME: Main Org
+        GF_AUTH_ANONYMOUS_ENABLED: "true"
+        GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+        GF_AUTH_ANONYMOUS: "true"
+        GF_AUTH_OAUTH_AUTO_LOGIN: "false"
+        GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: andrewbmchugh-flow-panel
+
+  links:
+    - endpoints: [leaf1:ethernet-1/1, spine1:ethernet-1/1]
+    - endpoints: [leaf1:ethernet-1/2, spine2:ethernet-1/1]
+    - endpoints: [host1:eth1, leaf1:ethernet-1/3]
+    - endpoints: [leaf1:ethernet-1/4, spine1:ethernet-1/5]
+    - endpoints: [leaf1:ethernet-1/5, spine2:ethernet-1/5]
+
+    - endpoints: [leaf2:ethernet-1/1, spine1:ethernet-1/2]
+    - endpoints: [leaf2:ethernet-1/2, spine2:ethernet-1/2]
+    - endpoints: [leaf2:ethernet-1/3, spine1:ethernet-1/6]
+    - endpoints: [leaf2:ethernet-1/4, spine2:ethernet-1/6]
+    - endpoints: [host2:eth1, leaf2:ethernet-1/5]
+
+    - endpoints: [leaf3:ethernet-1/1, spine1:ethernet-1/3]
+    - endpoints: [leaf3:ethernet-1/2, spine2:ethernet-1/3]
+    - endpoints: [host3:eth1, leaf3:ethernet-1/3]
+    - endpoints: [leaf3:ethernet-1/4, spine1:ethernet-1/4]
+    - endpoints: [leaf3:ethernet-1/5, spine2:ethernet-1/4]

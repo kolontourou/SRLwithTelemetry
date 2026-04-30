@@ -1,0 +1,193 @@
+{
+  "freeTextAnnotations": [
+    {
+      "id": "title",
+      "text": "SRL CLOS Fabric with Telemetry",
+      "position": { "x": 200, "y": 30 },
+      "fontSize": 16,
+      "fontColor": "#2d2d2d",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "spine-label",
+      "text": "SPINES",
+      "position": { "x": 80, "y": 120 },
+      "fontSize": 11,
+      "fontColor": "#3d3d3d",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "leaf-label",
+      "text": "LEAVES",
+      "position": { "x": 340, "y": 120 },
+      "fontSize": 11,
+      "fontColor": "#3d3d3d",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "host-label",
+      "text": "CLIENTS",
+      "position": { "x": 590, "y": 120 },
+      "fontSize": 11,
+      "fontColor": "#3d3d3d",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "telem-label",
+      "text": "TELEMETRY",
+      "position": { "x": 323.51637370115907, "y": 532.1015761821366 },
+      "fontSize": 11,
+      "fontColor": "#5a5a5a",
+      "fontWeight": "bold"
+    },
+    {
+      "id": "mgmt-note",
+      "text": "Mgmt: 172.20.22.0/24",
+      "position": { "x": 20, "y": 55 },
+      "fontSize": 10,
+      "fontColor": "#808080"
+    }
+  ],
+  "freeShapeAnnotations": [
+    {
+      "id": "fabric-box",
+      "position": { "x": 30, "y": 110 },
+      "width": 690,
+      "height": 400,
+      "fillColor": "#f5f5f5",
+      "cornerRadius": 10,
+      "zIndex": -1
+    },
+    {
+      "id": "telem-box",
+      "position": { "x": 50, "y": 545 },
+      "width": 650,
+      "height": 85,
+      "fillColor": "#ebebeb",
+      "cornerRadius": 8,
+      "zIndex": -1
+    }
+  ],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "spine1",
+      "interfacePattern": "ethernet-1/{n}",
+      "position": { "x": 110, "y": 210 },
+      "icon": "spine",
+      "iconColor": "#3d3d3d",
+      "iconCornerRadius": 5,
+      "label": "spine1\nSRL\n.22.10"
+    },
+    {
+      "id": "spine2",
+      "interfacePattern": "ethernet-1/{n}",
+      "position": { "x": 110, "y": 380 },
+      "icon": "spine",
+      "iconColor": "#4a4a4a",
+      "iconCornerRadius": 5,
+      "label": "spine2\nSRL\n.22.11"
+    },
+    {
+      "id": "leaf1",
+      "interfacePattern": "ethernet-1/{n}",
+      "position": { "x": 370, "y": 160 },
+      "icon": "leaf",
+      "iconColor": "#6b6b6b",
+      "iconCornerRadius": 5,
+      "label": "leaf1\nSRL\n.22.12"
+    },
+    {
+      "id": "leaf2",
+      "interfacePattern": "ethernet-1/{n}",
+      "position": { "x": 370, "y": 300 },
+      "icon": "leaf",
+      "iconColor": "#7a7a7a",
+      "iconCornerRadius": 5,
+      "label": "leaf2\nSRL\n.22.13"
+    },
+    {
+      "id": "leaf3",
+      "interfacePattern": "ethernet-1/{n}",
+      "position": { "x": 370, "y": 440 },
+      "icon": "leaf",
+      "iconColor": "#7a7a7a",
+      "iconCornerRadius": 5,
+      "label": "leaf3\nSRL\n.22.14"
+    },
+    {
+      "id": "host1",
+      "interfacePattern": "eth1",
+      "position": { "x": 610, "y": 160 },
+      "icon": "client",
+      "iconColor": "#a0a0a0",
+      "iconCornerRadius": 5,
+      "label": "host1\n10.100.1.10"
+    },
+    {
+      "id": "host2",
+      "interfacePattern": "eth1",
+      "position": { "x": 610, "y": 300 },
+      "icon": "client",
+      "iconColor": "#a0a0a0",
+      "iconCornerRadius": 5,
+      "label": "host2\n10.100.3.10"
+    },
+    {
+      "id": "host3",
+      "interfacePattern": "eth1",
+      "position": { "x": 610, "y": 440 },
+      "icon": "client",
+      "iconColor": "#a0a0a0",
+      "iconCornerRadius": 5,
+      "label": "host3\n10.100.3.11"
+    },
+    {
+      "id": "grafana",
+      "position": { "x": 70, "y": 565 },
+      "icon": "host",
+      "iconColor": "#5a5a5a",
+      "iconCornerRadius": 5,
+      "label": "grafana\n:3000\n.22.93"
+    },
+    {
+      "id": "prometheus",
+      "position": { "x": 200, "y": 565 },
+      "icon": "host",
+      "iconColor": "#5a5a5a",
+      "iconCornerRadius": 5,
+      "label": "prometheus\n:9090\n.22.92"
+    },
+    {
+      "id": "gnmic",
+      "position": { "x": 340, "y": 565 },
+      "icon": "host",
+      "iconColor": "#6b6b6b",
+      "iconCornerRadius": 5,
+      "label": "gnmic\n.22.91"
+    },
+    {
+      "id": "loki",
+      "position": { "x": 480, "y": 565 },
+      "icon": "host",
+      "iconColor": "#6b6b6b",
+      "iconCornerRadius": 5,
+      "label": "loki\n.22.94"
+    },
+    {
+      "id": "promtail",
+      "position": { "x": 610, "y": 565 },
+      "icon": "host",
+      "iconColor": "#6b6b6b",
+      "iconCornerRadius": 5,
+      "label": "promtail\n.22.90"
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {
+    "bgColor": "#ffffff"
+  }
+}
