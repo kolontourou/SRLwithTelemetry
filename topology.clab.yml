@@ -8,7 +8,7 @@ topology:
   kinds:
     nokia_srlinux:
       image: ghcr.io/nokia/srlinux:26.3.1
-      type: ixr-d3l
+      type: ixrd3l
     linux:
       image: ghcr.io/srl-labs/network-multitool
 
