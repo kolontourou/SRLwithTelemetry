@@ -1,0 +1,15 @@
+{
+  "name": "SRL with Telemetry",
+  "image": "ghcr.io/srl-labs/containerlab/devcontainer-dind-slim:0.68.0",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb",
+    "storage": "32gb"
+  },
+  "forwardPorts": [3000, 9090],
+  "portsAttributes": {
+    "3000": { "label": "Grafana", "onAutoForward": "openBrowser" },
+    "9090": { "label": "Prometheus", "onAutoForward": "silent" }
+  },
+  "postCreateCommand": "containerlab version || true"
+}
